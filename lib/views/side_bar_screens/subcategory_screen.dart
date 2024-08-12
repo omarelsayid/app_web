@@ -20,7 +20,6 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final SubcategoryController subcategoryController = SubcategoryController();
   Uint8List? _image;
-  dynamic _bannerImage;
   late String name;
   Category? selectedCategory;
   @override
@@ -42,17 +41,7 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
     }
   }
 
-  pickBannerImage() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.image,
-      allowMultiple: false,
-    );
-    if (result != null) {
-      setState(() {
-        _bannerImage = result.files.first.bytes;
-      });
-    }
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +162,7 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     subcategoryController.uploadSubCategory(
                         categoryId: selectedCategory!.id,
@@ -181,6 +170,11 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
                         pickedImage: _image,
                         subCategoryName: name,
                         context: context);
+
+                    setState(() {
+                      _formKey.currentState!.reset();
+                      _image = null;
+                    });
                   }
                 },
                 child: const Text(
