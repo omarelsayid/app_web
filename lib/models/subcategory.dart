@@ -8,11 +8,12 @@ class Subcategory {
   final String image;
   final String subCategoryName;
 
-  Subcategory({required this.id, required this.categoryId, required this.categoryName, required this.image, required this.subCategoryName});
-
-
-
-
+  Subcategory(
+      {required this.id,
+      required this.categoryId,
+      required this.categoryName,
+      required this.image,
+      required this.subCategoryName});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -26,7 +27,7 @@ class Subcategory {
 
   factory Subcategory.fromMap(Map<String, dynamic> map) {
     return Subcategory(
-      id: map['_ id'] as String,
+      id: map['_id'] as String ?? '',
       categoryId: map['categoryId'] as String,
       categoryName: map['categoryName'] as String,
       image: map['image'] as String,
@@ -36,5 +37,6 @@ class Subcategory {
 
   String toJson() => json.encode(toMap());
 
-  factory Subcategory.fromJson(String source) => Subcategory.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Subcategory.fromJson(String source) =>
+      Subcategory.fromMap(json.decode(source) as Map<String, dynamic>);
 }
